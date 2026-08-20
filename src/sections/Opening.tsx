@@ -101,7 +101,10 @@ export default function Opening() {
               fontSize: "clamp(3rem, 11vw, 11rem)",
               color: "#F5F5F5",
               fontWeight: 700,
-              letterSpacing: "-0.05em",
+              // -0.05em (from the reference) collides glyphs in long mixed-case
+              // strings; that value suits short all-caps settings.
+              letterSpacing: "-0.005em",
+              wordSpacing: "0.08em",
               willChange: "transform",
               transformStyle: "preserve-3d",
             }}
