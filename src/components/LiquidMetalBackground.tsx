@@ -131,7 +131,7 @@ export default function LiquidMetalBackground() {
       {webglFailed && (
         <div
           className="absolute inset-0"
-          style={{ backgroundColor: "#0F0F0F" }}
+          style={{ backgroundColor: "var(--color-metal)" }}
           aria-hidden="true"
         />
       )}

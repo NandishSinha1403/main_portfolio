@@ -74,3 +74,59 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* GC Epic Pro (Demo) — vendored from the gc-epic-pro-demo/ folder in the repo
+   root and converted TTF -> woff2.
+
+   TWO IMPORTANT CONSTRAINTS:
+   1. LICENSE: the demo is licensed for PERSONAL USE ONLY. A commercial licence
+      must be bought from glyphonic.gumroad.com before this is used in any
+      commercial or corporate context.
+   2. GLYPH COVERAGE: the demo ships only 55 glyphs — A-Z and a-z. It has NO
+      digits and NO punctuation. Apply `--font-display` only to strings made
+      purely of letters and spaces (the name, "SELECTED WORKS", "GET IN TOUCH",
+      "Experience", "Skills"). Anything containing a digit, period, comma or
+      middot must stay on Clash Display, or the browser will silently fall back
+      per-glyph and mix two typefaces inside one word. */
+@font-face {
+  font-family: "Epic Pro";
+  src: url("./epic-pro-300.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Epic Pro";
+  src: url("./epic-pro-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Epic Pro";
+  src: url("./epic-pro-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Epic Pro";
+  src: url("./epic-pro-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Epic Pro";
+  src: url("./epic-pro-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Epic Pro";
+  src: url("./epic-pro-800.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}

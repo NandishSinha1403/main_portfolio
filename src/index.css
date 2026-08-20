@@ -2,21 +2,171 @@
 
 @import "./fonts/fonts.css";
 @import "@fontsource/jetbrains-mono";
+@import "@fontsource/eb-garamond/700.css";
 
 @theme {
   --font-heading: "Clash Display", sans-serif;
+  /* Epic Pro is used for the name in the opening section ONLY. Its demo
+     licence ships just 55 glyphs (A-Z, a-z) — no digits, no punctuation —
+     so it cannot safely render anything else on this site. */
+  --font-display: "Epic Pro", "Clash Display", sans-serif;
+  --font-serif: "EB Garamond", Georgia, serif;
   --font-body: "Satoshi", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+
+  /* --- Surfaces -------------------------------------------------------
+     Named for the role they play in the page's tonal sequence, not for
+     their lightness, so the dark-to-light flips stay legible in code. */
+  --color-metal: #0f0f0f; /* skills section, mobile overlay, shader ground */
+  --color-deep: #0a0a0a; /* about section, focus ring on light surfaces */
+  --color-card: #18181b; /* project card image layer behind the photo */
+  --color-paper: #ffffff; /* selected works — the hard flip out of the dark */
+  --color-ghost: #fafafa; /* contact footer */
+
+  /* --- Foreground ------------------------------------------------------ */
+  --color-bright: #f5f5f5; /* display type and focus rings on dark */
+  --color-fg: #e5e5e5; /* body copy on dark surfaces */
+  --color-ink: #000000; /* type on the two light surfaces */
+  --color-muted: #888888; /* secondary copy on dark — 5.4:1 on --color-metal */
+  /* Secondary copy on LIGHT surfaces. Not --color-muted: #888 is only 3.4:1
+     on --color-ghost, under the 4.5:1 AA floor. This is 6.7:1. */
+  --color-muted-ink: #595959;
+
+  /* The single chroma on an otherwise monochrome site. Selection and caret
+     only — see DESIGN.md. It must never sit directly on the shader. */
+  --color-accent: #ef4444;
+
+  /* --- Lines and veils -------------------------------------------------- */
+  --color-rule: rgb(229 229 229 / 0.12); /* hairline borders */
+  --color-glass: rgb(10 10 10 / 0.55); /* nav backdrop tint */
+
+  /* --- Motion -----------------------------------------------------------
+     One easing curve for the whole site; it appeared 19 times inline. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html,
 body {
   margin: 0;
-  background-color: #0F0F0F;
+  background-color: var(--color-metal);
   font-family: var(--font-body);
 }
 
+.achievement-link {
+  color: var(--color-fg);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--color-fg) 35%, transparent);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 200ms var(--ease-out-expo);
+}
+.achievement-link:hover {
+  text-decoration-color: color-mix(in srgb, var(--color-fg) 90%, transparent);
+}
+
+/* --- Touch and safe-area adaptation ------------------------------------- */
+
+/* Notched devices: keep fixed chrome and the light footer clear of the
+   rounded corners and home indicator. Paired with viewport-fit=cover. */
+nav {
+  padding-left: max(1.5rem, env(safe-area-inset-left));
+  padding-right: max(1.5rem, env(safe-area-inset-right));
+  padding-top: max(1.5rem, env(safe-area-inset-top));
+}
+#contact {
+  padding-bottom: max(5rem, env(safe-area-inset-bottom));
+}
+
+/* Coarse pointers get real tap targets. 44px is the WCAG 2.5.5 / iOS HIG
+   floor; the inline links in the nav and footer were well under it. */
+@media (pointer: coarse), (max-width: 768px) {
+  nav a,
+  nav button,
+  #contact a,
+  .achievement-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  #skills a,
+  #about a {
+    min-height: 44px;
+  }
+}
+
+/* Hover affordances must never be the only route to information on touch,
+   where :hover either never fires or sticks after a tap. */
+@media (hover: none) {
+  .work-card-title,
+  .work-card-meta {
+    transform: none;
+  }
+}
+
+/* --- Keyboard, focus, and browser surfaces ------------------------------ */
+
+/* Skip link: visually hidden until focused, then a real target at the top. */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--color-bright);
+  color: var(--color-deep);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transform: translateY(-120%);
+  transition: transform 200ms var(--ease-out-expo);
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: none;
+}
+
+/* Focus rings are a browser surface that ships with no design system unless
+   you give it one. Drawn from the palette: an off-white ring on dark
+   sections, near-black on the two light ones. The glass nav suppressed the
+   default outline entirely, so keyboard users had no indicator at all. */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-bright);
+  outline-offset: 3px;
+  border-radius: 0;
+}
+#work :where(a, button):focus-visible,
+#contact :where(a, button):focus-visible {
+  outline-color: var(--color-deep);
+}
+
+/* Caret and selection also ship undesigned. */
+html {
+  caret-color: var(--color-accent);
+}
 ::selection {
-  background-color: #ef4444;
-  color: #ffffff;
+  background-color: var(--color-accent);
+  color: var(--color-paper);
+}
+
+/* Windows High Contrast / forced-colors: the monochrome palette collapses to
+   the user's chosen colors, so restore an explicit visible focus ring and
+   let the shader canvas drop away rather than fight the forced background. */
+@media (forced-colors: active) {
+  :where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid CanvasText;
+  }
+  canvas {
+    display: none;
+  }
+}
+
+/* Long unbroken strings (an email, a URL) must not push a layout wider than
+   its container on narrow viewports. */
+a,
+p,
+li,
+h1,
+h2,
+h3 {
+  overflow-wrap: break-word;
 }
