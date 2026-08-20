@@ -119,18 +119,10 @@ export default function Opening() {
         }
       );
 
-      if (roleRef.current) {
-        gsap.to(roleRef.current, {
-          opacity: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "60% top",
-            scrub: true,
-          },
-        });
-      }
+      // The role label used to scrub to opacity 0 over the first 60% of the
+      // section (DESIGN.md called for it to "fade out on scroll"). In practice
+      // it vanished almost immediately and read as a rendering glitch rather
+      // than an intentional effect, so it now stays put.
 
       if (cueRef.current) {
         gsap.fromTo(

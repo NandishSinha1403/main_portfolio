@@ -59,7 +59,7 @@ Links 18px/500, tight tracking. Desktop: horizontal flex, 3rem gap. Mobile: sing
 `min-h-[100vh]` (min 857px). Liquid Metal at full strength behind it, plus the dark plate described above.
 - Back layer: the shader canvas, scale-linked to scroll (1.0→1.27).
 - Mid layer: name/display heading, 11–12vw, Clash Display 700, `#F5F5F5`, scale-linked to scroll (1.0→0.89).
-- Overlay: role/sub-label (Clash Display 200, ~32px) positioned `left-[calc(100%+1rem)]` relative to heading, fades out on scroll.
+- Sub-label: role line (Clash Display 200, ~32px) stacked beneath the name. It does NOT fade on scroll — an earlier scrub to opacity 0 read as a glitch. It is also not positioned beside the heading; at display size the name spans the viewport and the label was clipped off-screen.
 - Bottom: one-line summary, `max-w-2xl`, `#e5e5e5` at 70% opacity.
 
 ### Selected Work (project grid)
