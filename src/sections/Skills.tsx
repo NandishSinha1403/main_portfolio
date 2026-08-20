@@ -116,14 +116,24 @@ export default function Skills() {
             scrollTrigger: {
               trigger: el,
               start: "top 85%",
-              toggleActions: "play none none reverse",
+              once: true,
             },
           }
         );
       });
     }, sectionRef);
 
-    return () => ctx.revert();
+    // Recalculate start points once webfonts land — they change line wrapping
+    // and therefore every offset below this section.
+    const refresh = () => ScrollTrigger.refresh();
+    const raf = requestAnimationFrame(refresh);
+    window.addEventListener("load", refresh);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("load", refresh);
+      ctx.revert();
+    };
   }, []);
 
   return (

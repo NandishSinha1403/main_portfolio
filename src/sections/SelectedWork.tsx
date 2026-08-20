@@ -65,8 +65,12 @@ function ProjectCard({ project }: { project: Project }) {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
+          // Several of these screenshots are light UIs, so once desaturated
+          // they read almost white. The scrim has to run darker and further up
+          // the card than usual or the title and stack are unreadable — the
+          // stack line wraps to two lines on the widest card.
           background:
-            "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.15) 45%, transparent 70%)",
+            "linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.88) 28%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.15) 78%, transparent 100%)",
         }}
       />
 
@@ -122,14 +126,14 @@ export default function SelectedWork() {
           .work-card { aspect-ratio: 16 / 10; }
         }
         .work-card-img {
-          filter: grayscale(1);
+          filter: grayscale(1) brightness(0.8);
           transform: scale(1);
           transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
             filter 500ms cubic-bezier(0.16, 1, 0.3, 1);
         }
         .work-card:hover .work-card-img {
           transform: scale(1.05);
-          filter: grayscale(0.15);
+          filter: grayscale(0.15) brightness(0.95);
         }
         .work-card-btn {
           transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
