@@ -6,7 +6,9 @@
 
 @theme {
   --font-heading: "Clash Display", sans-serif;
-  /* Letters-only strings only — see src/fonts/fonts.css */
+  /* Epic Pro is used for the name in the opening section ONLY. Its demo
+     licence ships just 55 glyphs (A-Z, a-z) — no digits, no punctuation —
+     so it cannot safely render anything else on this site. */
   --font-display: "Epic Pro", "Clash Display", sans-serif;
   --font-serif: "EB Garamond", Georgia, serif;
   --font-body: "Satoshi", sans-serif;

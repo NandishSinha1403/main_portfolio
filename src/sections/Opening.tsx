@@ -187,7 +187,7 @@ export default function Opening() {
             ref={headingRef}
             className="font-display leading-[0.9]"
             style={{
-              fontSize: "clamp(3rem, 11vw, 11rem)",
+              fontSize: "clamp(2.25rem, 9vw, 8.5rem)",
               color: "#F5F5F5",
               fontWeight: 700,
               // -0.05em (from the reference) collides glyphs in long mixed-case
@@ -198,23 +198,32 @@ export default function Opening() {
               transformStyle: "preserve-3d",
             }}
           >
-            {NAME.split("").map((char, i) =>
-              char === " " ? (
-                <span key={i} aria-hidden="true">
-                  {" "}
-                </span>
-              ) : (
-                <span
-                  key={i}
-                  data-char
-                  className="inline-block overflow-hidden"
-                  style={{ willChange: "transform" }}
-                  aria-hidden="true"
-                >
-                  <span className="inline-block">{char}</span>
-                </span>
-              )
-            )}
+            {/* Characters are grouped per word. Each char needs to be its own
+                inline-block for the stagger/drift, but that also gives the
+                browser a break opportunity between every pair of letters — the
+                name was wrapping as "NANDISH SINH / A". Wrapping each word in a
+                nowrap span restricts breaks to real word boundaries. */}
+            {NAME.split(" ").map((word, wi) => (
+              <span
+                key={wi}
+                className="inline-block whitespace-nowrap"
+                aria-hidden="true"
+              >
+                {word.split("").map((char, ci) => (
+                  <span
+                    key={ci}
+                    data-char
+                    className="inline-block overflow-hidden"
+                    style={{ willChange: "transform" }}
+                  >
+                    <span className="inline-block">{char}</span>
+                  </span>
+                ))}
+                {wi < NAME.split(" ").length - 1 && (
+                  <span className="inline-block">&nbsp;</span>
+                )}
+              </span>
+            ))}
             <span className="sr-only">{NAME}</span>
           </h1>
 

@@ -263,7 +263,7 @@ export default function SelectedWork() {
 
       <h2
         ref={headingRef}
-        className="font-display mb-16 leading-[0.9]"
+        className="font-heading mb-16 leading-[0.9]"
         style={{ letterSpacing: "-0.005em", wordSpacing: "0.08em" }}
       >
         <span
@@ -274,7 +274,7 @@ export default function SelectedWork() {
         </span>
         <span
           className="block"
-          style={{ fontWeight: 300, fontSize: "clamp(2.5rem, 8vw, 9rem)" }}
+          style={{ fontWeight: 200, fontSize: "clamp(2.5rem, 8vw, 9rem)" }}
         >
           WORKS
         </span>
