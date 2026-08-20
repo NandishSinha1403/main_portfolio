@@ -1,4 +1,15 @@
 User-agent: *
 Allow: /
 
+# Keep AI crawlers allowed — being cited in an assistant's answer for
+# "Nandish Sinha" is now part of how people find a person.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
 Sitemap: https://nandish.dev/sitemap.xml
