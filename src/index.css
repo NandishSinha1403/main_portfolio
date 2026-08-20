@@ -1,15 +1,11 @@
 @import "tailwindcss";
 
-@import "@fontsource-variable/fraunces";
-@import "@fontsource/hanken-grotesk";
-@import "@fontsource/hanken-grotesk/500.css";
-@import "@fontsource/hanken-grotesk/600.css";
-@import "@fontsource/hanken-grotesk/700.css";
+@import "./fonts/fonts.css";
 @import "@fontsource/jetbrains-mono";
 
 @theme {
-  --font-heading: "Fraunces Variable", serif;
-  --font-body: "Hanken Grotesk", sans-serif;
+  --font-heading: "Clash Display", sans-serif;
+  --font-body: "Satoshi", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 }
 
