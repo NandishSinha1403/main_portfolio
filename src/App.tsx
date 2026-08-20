@@ -13,13 +13,23 @@ function App() {
 
   return (
     <div className="min-h-screen">
+      {/* Keyboard users otherwise tab through the whole nav on every load, and
+          screen readers had no landmark to jump to — the page was one <nav>
+          followed by unlabelled sections. */}
+      <a href="#top" className="skip-link">
+        Skip to content
+      </a>
       <ScrollProgress />
       <Nav />
-      <Opening />
-      <SelectedWork />
-      <Manifesto />
-      <Skills />
-      <Contact />
+      <main>
+        <Opening />
+        <SelectedWork />
+        <Manifesto />
+        <Skills />
+      </main>
+      <footer>
+        <Contact />
+      </footer>
       <GrainOverlay />
     </div>
   )

@@ -111,7 +111,7 @@ export default function Contact() {
         <div className="flex flex-col gap-3">
           <span
             className="font-mono uppercase"
-            style={{ fontSize: "14px", color: "#888" }}
+            style={{ fontSize: "14px", color: "#595959" }}
           >
             Elsewhere
           </span>
@@ -143,7 +143,7 @@ export default function Contact() {
         <div className="flex flex-col justify-start">
           <span
             className="font-mono uppercase mb-3"
-            style={{ fontSize: "14px", color: "#888" }}
+            style={{ fontSize: "14px", color: "#595959" }}
           >
             Email
           </span>
@@ -163,7 +163,7 @@ export default function Contact() {
         <div className="flex items-end justify-start md:justify-end">
           <p
             className="font-body font-medium"
-            style={{ color: "#888", fontSize: "0.875rem" }}
+            style={{ color: "#595959", fontSize: "0.875rem" }}
           >
             © 2026 Nandish Sinha. All rights reserved.
           </p>

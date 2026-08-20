@@ -79,3 +79,72 @@ nav {
     transform: none;
   }
 }
+
+/* --- Keyboard, focus, and browser surfaces ------------------------------ */
+
+/* Skip link: visually hidden until focused, then a real target at the top. */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background-color: #f5f5f5;
+  color: #0a0a0a;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transform: translateY(-120%);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: none;
+}
+
+/* Focus rings are a browser surface that ships with no design system unless
+   you give it one. Drawn from the palette: an off-white ring on dark
+   sections, near-black on the two light ones. The glass nav suppressed the
+   default outline entirely, so keyboard users had no indicator at all. */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid #f5f5f5;
+  outline-offset: 3px;
+  border-radius: 0;
+}
+#work :where(a, button):focus-visible,
+#contact :where(a, button):focus-visible {
+  outline-color: #0a0a0a;
+}
+
+/* Caret and selection also ship undesigned. */
+html {
+  caret-color: #ef4444;
+}
+::selection {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+/* Windows High Contrast / forced-colors: the monochrome palette collapses to
+   the user's chosen colors, so restore an explicit visible focus ring and
+   let the shader canvas drop away rather than fight the forced background. */
+@media (forced-colors: active) {
+  :where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid CanvasText;
+  }
+  canvas {
+    display: none;
+  }
+}
+
+/* Long unbroken strings (an email, a URL) must not push a layout wider than
+   its container on narrow viewports. */
+a,
+p,
+li,
+h1,
+h2,
+h3 {
+  overflow-wrap: break-word;
+}
