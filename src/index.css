@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@import "./fonts/fonts.css";
+@import "@fontsource/jetbrains-mono";
+
+@theme {
+  --font-heading: "Clash Display", sans-serif;
+  --font-body: "Satoshi", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+html,
+body {
+  margin: 0;
+  background-color: #0F0F0F;
+  font-family: var(--font-body);
+}
+
+::selection {
+  background-color: #ef4444;
+  color: #ffffff;
+}
