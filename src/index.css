@@ -13,7 +13,14 @@
   --font-mono: "JetBrains Mono", monospace;
 }
 
+html,
 body {
   margin: 0;
+  background-color: #0f0d2b;
   font-family: var(--font-body);
+}
+
+::selection {
+  background-color: #ef4444;
+  color: #ffffff;
 }

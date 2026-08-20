@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { silkFragmentShader, silkVertexShader } from "../shaders/silk.frag";
-import { createFullscreenQuad, createGLContext, createProgram, type GLContext } from "../lib/webgl";
+import { createFullscreenQuad, createGLContext, createProgram } from "../lib/webgl";
 
 const MAX_DPR = 2;
 
@@ -111,13 +111,16 @@ export default function SilkBackground() {
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerleave", onPointerLeave);
       window.removeEventListener("blur", onPointerLeave);
-      const loseContext = (gl as GLContext).getExtension("WEBGL_lose_context");
-      loseContext?.loseContext();
+      // NOTE: deliberately not calling WEBGL_lose_context here. getContext()
+      // hands back the same context object for a given canvas, so losing it in
+      // cleanup leaves StrictMode's second mount with a permanently dead
+      // context and nothing ever renders. The context is reclaimed on its own
+      // once the canvas is detached.
     };
   }, []);
 
   return (
-    <div className="fixed inset-0 -z-10">
+    <div className="fixed inset-0 z-0">
       {webglFailed && (
         <div
           className="absolute inset-0"
