@@ -4,6 +4,12 @@ import { createFullscreenQuad, createGLContext, createProgram } from "../lib/web
 
 const MAX_DPR = 2;
 
+// How far the background is pushed back so foreground content can sit on it.
+// Both are pure CSS over an untouched shader, so they're safe to dial.
+// BLUR softens the fine texture; SCRIM_OPACITY flattens the contrast.
+const BLUR_PX = 2.5;
+const SCRIM_OPACITY = 0.4;
+
 export default function SilkBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [webglFailed, setWebglFailed] = useState(false);
@@ -131,6 +137,18 @@ export default function SilkBackground() {
       <canvas
         ref={canvasRef}
         className="pointer-events-none absolute inset-0 h-full w-full"
+        style={{
+          filter: `blur(${BLUR_PX}px)`,
+          // Blur samples past the canvas edge and would show a soft border, so
+          // overscan slightly to keep the bleed off-screen.
+          transform: "scale(1.04)",
+        }}
+        aria-hidden="true"
+      />
+      {/* Scrim: knocks the shader back so foreground type stays dominant. */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ backgroundColor: "#0F0D2B", opacity: SCRIM_OPACITY }}
         aria-hidden="true"
       />
     </div>

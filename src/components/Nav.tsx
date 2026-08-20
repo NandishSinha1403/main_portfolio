@@ -37,8 +37,15 @@ export default function Nav() {
 
   return (
     <>
+      {/* Glass bar rather than mix-blend-difference. The dark tint means the
+          bar stays legible over the light Selected Works section too, without
+          inverting the link colors the way the blend mode did. */}
       <nav
-        className="fixed top-0 w-full z-50 px-6 py-8 mix-blend-difference"
+        className="fixed top-0 w-full z-50 px-6 py-6 backdrop-blur-xl border-b"
+        style={{
+          backgroundColor: "rgba(15, 13, 43, 0.55)",
+          borderBottomColor: "rgba(229, 229, 229, 0.12)",
+        }}
         aria-label="Primary"
       >
         <div className="flex items-center justify-between">
