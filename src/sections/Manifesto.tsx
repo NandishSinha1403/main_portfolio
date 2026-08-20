@@ -6,13 +6,16 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Manifesto / achievements section. See DESIGN.md "Manifesto / achievements"
 // and PRD.md "Achievements". Flat background, no shader.
-const ACHIEVEMENTS = [
-  "2× National-Level Hackathon Finalist — SIH 2022, India Innovates 2026",
-  "Participant, JPMC Code for Good 2026",
-  "Participant, Google Kickstart 2020",
-  "GitHub Arctic Code Vault Contributor (2020)",
-  "University of Helsinki — Python Programming",
-  "Java Certified, SoloLearn (2019)",
+const ACHIEVEMENTS: { label: string; href?: string }[] = [
+  { label: "2× National-Level Hackathon Finalist — SIH 2022, India Innovates 2026" },
+  { label: "Participant, JPMorganChase & Co. Code for Good 2026" },
+  { label: "Participant, Google Kickstart 2020" },
+  { label: "GitHub Arctic Code Vault Contributor (2020)" },
+  {
+    label: "University of Helsinki — Python Programming",
+    href: "https://certificates.mooc.fi/validate/8t4sd1ymoic",
+  },
+  { label: "Java Certified, SoloLearn (2019)" },
 ];
 
 export default function Manifesto() {
@@ -89,7 +92,7 @@ export default function Manifesto() {
         {/* Portrait */}
         <div className="flex-shrink-0 md:w-2/5">
           <img
-            src="/images/portrait.jpg"
+            src="/images/portrait-alt.jpg"
             alt="Portrait of Nandish Sinha"
             className="w-full object-cover"
             style={{ filter: "grayscale(1)" }}
@@ -109,8 +112,8 @@ export default function Manifesto() {
               wordSpacing: "0.08em",
             }}
           >
-            I build backend, real-time, and AI-voice systems, and ship them to
-            production.
+            I build AI systems that talk to people, and the infrastructure that
+            keeps them up.
           </p>
 
           <div
@@ -126,11 +129,23 @@ export default function Manifesto() {
           <ul className="font-mono mt-10 flex flex-col gap-3">
             {ACHIEVEMENTS.map((item) => (
               <li
-                key={item}
+                key={item.label}
                 className="text-sm leading-relaxed"
                 style={{ color: "#888", fontSize: "14px" }}
               >
-                {item}
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="achievement-link"
+                  >
+                    {item.label}
+                    <span aria-hidden="true"> ↗</span>
+                  </a>
+                ) : (
+                  item.label
+                )}
               </li>
             ))}
           </ul>

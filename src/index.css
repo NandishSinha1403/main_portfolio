@@ -2,9 +2,13 @@
 
 @import "./fonts/fonts.css";
 @import "@fontsource/jetbrains-mono";
+@import "@fontsource/eb-garamond/700.css";
 
 @theme {
   --font-heading: "Clash Display", sans-serif;
+  /* Letters-only strings only — see src/fonts/fonts.css */
+  --font-display: "Epic Pro", "Clash Display", sans-serif;
+  --font-serif: "EB Garamond", Georgia, serif;
   --font-body: "Satoshi", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 }
@@ -19,4 +23,15 @@ body {
 ::selection {
   background-color: #ef4444;
   color: #ffffff;
+}
+
+.achievement-link {
+  color: #e5e5e5;
+  text-decoration: underline;
+  text-decoration-color: rgba(229, 229, 229, 0.35);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.achievement-link:hover {
+  text-decoration-color: rgba(229, 229, 229, 0.9);
 }

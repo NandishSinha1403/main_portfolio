@@ -96,7 +96,7 @@ export default function Opening() {
         <div className="relative inline-flex flex-col items-center">
           <h1
             ref={headingRef}
-            className="font-heading leading-[0.9]"
+            className="font-display leading-[0.9]"
             style={{
               fontSize: "clamp(3rem, 11vw, 11rem)",
               color: "#F5F5F5",
@@ -139,8 +139,8 @@ export default function Opening() {
           className="font-body mt-8 max-w-2xl text-base md:text-lg font-medium"
           style={{ color: "#e5e5e5", opacity: 0.7 }}
         >
-          CS undergrad building backend, real-time, and AI-voice systems.
-          Two-time national hackathon finalist.
+          AI/ML and forward deployed engineer. Real-time voice systems, applied
+          ML, and the infrastructure that keeps them running.
         </p>
       </div>
     </section>

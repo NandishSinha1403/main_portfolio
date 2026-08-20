@@ -79,7 +79,7 @@ function ProjectCard({ project }: { project: Project }) {
         className="work-card-btn pointer-events-none absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white opacity-0"
         aria-hidden="true"
       >
-        <ArrowUpRight size={20} color="#ef4444" strokeWidth={2.25} />
+        <ArrowUpRight size={20} color="#0A0A0A" strokeWidth={2.25} />
       </div>
 
       {/* Bottom content block: title + metadata, always visible, animates on hover */}
@@ -91,7 +91,15 @@ function ProjectCard({ project }: { project: Project }) {
           {project.year} · {project.stack.join(", ")}
         </p>
         {project.note && (
-          <p className="font-mono mt-1" style={{ fontSize: "12px", color: "#ef4444" }}>
+          <p
+            className="font-serif mt-1"
+            style={{
+              fontSize: "clamp(0.95rem, 1.3vw, 1.15rem)",
+              fontWeight: 700,
+              color: "#F5F5F5",
+              letterSpacing: "0.01em",
+            }}
+          >
             {project.note}
           </p>
         )}
@@ -166,7 +174,7 @@ export default function SelectedWork() {
       `}</style>
 
       <h2
-        className="font-heading mb-16 leading-[0.9]"
+        className="font-display mb-16 leading-[0.9]"
         style={{ letterSpacing: "-0.005em", wordSpacing: "0.08em" }}
       >
         <span
@@ -177,7 +185,7 @@ export default function SelectedWork() {
         </span>
         <span
           className="block"
-          style={{ fontWeight: 200, fontSize: "clamp(2.5rem, 8vw, 9rem)" }}
+          style={{ fontWeight: 300, fontSize: "clamp(2.5rem, 8vw, 9rem)" }}
         >
           WORKS
         </span>
