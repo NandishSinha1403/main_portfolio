@@ -1,9 +1,12 @@
 # Design Spec — Cinematic Noir + Liquid Metal
 
-## Fonts (final — free only)
-- **Headings**: Fraunces (variable, Google Fonts). Use its full range: Thin Italic (100 italic) for accent labels, Black (900) for display headlines. This replaces "ZTNature" everywhere below — same intent (extreme weight contrast), free and distinctive.
-- **Body**: Hanken Grotesk (Google Fonts). Quiet, stays out of Fraunces' way.
-- **Mono / sub-labels**: JetBrains Mono (Google Fonts), 14px, for category tags.
+## Fonts (final — free, self-hosted)
+- **Headings**: Clash Display (Fontshare, ITF Free Font License). Weight 700 for display, 200 for light sub-labels — the weight contrast replaces the old thin-italic/black serif pairing.
+- **Body**: Satoshi (Fontshare), weight 500.
+- **Mono / sub-labels**: JetBrains Mono, 14px, for category tags.
+- Neither Clash Display nor Satoshi is on Google Fonts or fontsource, so the woff2 files are vendored in `src/fonts/` and declared in `src/fonts/fonts.css`. No runtime CDN dependency.
+- **Clash Display has no italic and no weight below 200.** Never apply `italic` to it — the browser will synthesize a sheared oblique. If a true italic is ever needed, it must come from a second family.
+- Display tracking: around `-0.005em` with `wordSpacing: 0.08em`. Tighter values collide glyphs in long mixed-case strings; the very tight tracking seen in all-caps references does not transfer.
 - Do not use Inter or any generic system sans as a substitute.
 
 ## Color palette
@@ -55,19 +58,19 @@ Links 18px/500, tight tracking. Desktop: horizontal flex, 3rem gap. Mobile: sing
 ### Opening section (do not call it "Hero" in UI or copy — internal dev label only)
 `min-h-[100vh]` (min 857px). Liquid Metal at full strength behind it, plus the dark plate described above.
 - Back layer: the shader canvas, scale-linked to scroll (1.0→1.27).
-- Mid layer: name/display heading, 11–12vw, Fraunces Black, `#F5F5F5`, scale-linked to scroll (1.0→0.89).
-- Overlay: role/sub-label (Fraunces Thin Italic, ~32px) positioned `left-[calc(100%+1rem)]` relative to heading, fades out on scroll.
+- Mid layer: name/display heading, 11–12vw, Clash Display 700, `#F5F5F5`, scale-linked to scroll (1.0→0.89).
+- Overlay: role/sub-label (Clash Display 200, ~32px) positioned `left-[calc(100%+1rem)]` relative to heading, fades out on scroll.
 - Bottom: one-line summary, `max-w-2xl`, `#e5e5e5` at 70% opacity.
 
 ### Selected Work (project grid)
 Background `#FFFFFF`, text `#000000`. `py-24 px-6`. The black→white transition out of the opening section is a deliberate hard architectural flip — do not soften it with a gradient.
-Heading: "SELECTED WORKS" — "SELECTED" 8vw Black, "WORKS" italic Thin.
+Heading: "SELECTED WORKS" — "SELECTED" 8vw at weight 700, "WORKS" at weight 200.
 Grid: 2-column, 2rem gap (collapses to 1 column under ~768px).
 Cards: aspect 16:10 desktop / 4:5 mobile, `#18181b` image layer, zoom 1.05 on hover. Title bottom-aligned, `translateY(1rem)→0` on hover. Hover reveals a white circular button with Lucide `ArrowUpRight`; this is where the red accent may appear. Metadata translates `4px→0`, action button fades `0→1` over 300ms.
 Use the 4 projects from PRD.md in order: Samadhan AI, PRGI, MarketScope, Grector.
 
 ### Manifesto / achievements
-Background `#0A0A0A`, `100vh`. Flat — no shader. Centered text, 5–7vw, Fraunces Medium, tight leading. Text slides up + fades in on scroll-into-view. Below: horizontal line `#ffffff/30%`, animating width `0→100%` (max 320px) on scroll-into-view.
+Background `#0A0A0A`, `100vh`. Flat — no shader. Centered text, 5–7vw, Clash Display 500, tight leading. Text slides up + fades in on scroll-into-view. Below: horizontal line `#ffffff/30%`, animating width `0→100%` (max 320px) on scroll-into-view.
 Content: from PRD.md "Achievements" — do not pad with invented lines.
 
 ### Skills strip
@@ -77,7 +80,7 @@ Background `#0F0F0F`. Quiet section between manifesto and contact — grouped li
 Background `#fafafa`. `py-20 px-6`. Top: full-width `border-b`, "GET IN TOUCH" 12vw Black uppercase. Bottom: 3-column grid — Col 1: social links (GitHub, LinkedIn) with wavy-underline hover; Col 2: email, 3xl; Col 3: rights-reserved text, bottom-right aligned.
 
 ## Special notes
-- MUST: full weight range (100–900) on Fraunces, used deliberately — thin italic next to black, never mid-weights for display type.
+- MUST: use Clash Display's weight range deliberately — 700 display against 200 sub-labels, never mid-weights for display type.
 - MUST: grain overlay site-wide.
 - MUST: nav stays legible across all section backgrounds — handled by the dark-tinted glass bar.
 - DO NOT: run the shader behind sections other than the opening one.
