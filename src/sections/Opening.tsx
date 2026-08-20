@@ -96,11 +96,12 @@ export default function Opening() {
         <div className="relative inline-flex flex-col items-center">
           <h1
             ref={headingRef}
-            className="font-heading font-black leading-[0.95]"
+            className="font-heading leading-[0.9]"
             style={{
               fontSize: "clamp(3rem, 11vw, 11rem)",
               color: "#F5F5F5",
-              letterSpacing: "-0.03em",
+              fontWeight: 700,
+              letterSpacing: "-0.05em",
               willChange: "transform",
               transformStyle: "preserve-3d",
             }}
@@ -116,10 +117,14 @@ export default function Opening() {
               Stacked beneath the heading instead, which holds at every width. */}
           <p
             ref={roleRef}
-            className="font-heading italic mt-4"
+            className="font-heading mt-4"
             style={{
-              fontWeight: 100,
+              // Clash Display has no italic and no 100 weight, so the previous
+              // Thin Italic treatment would have been a synthesized oblique.
+              // Weight 200 against the heading's 700 gives real contrast.
+              fontWeight: 200,
               fontSize: "clamp(1rem, 2.2vw, 2rem)",
+              letterSpacing: "-0.02em",
               color: "#F5F5F5",
             }}
           >
@@ -128,7 +133,7 @@ export default function Opening() {
         </div>
 
         <p
-          className="font-body mt-8 max-w-2xl text-base md:text-lg"
+          className="font-body mt-8 max-w-2xl text-base md:text-lg font-medium"
           style={{ color: "#e5e5e5", opacity: 0.7 }}
         >
           CS undergrad building backend, real-time, and AI-voice systems.
