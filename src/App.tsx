@@ -3,6 +3,7 @@ import Opening from "./sections/Opening"
 import SelectedWork from "./sections/SelectedWork"
 import Manifesto from "./sections/Manifesto"
 import Skills from "./sections/Skills"
+import Contact from "./sections/Contact"
 
 function App() {
   return (
@@ -12,8 +13,7 @@ function App() {
       <SelectedWork />
       <Manifesto />
       <Skills />
-      {/* Temporary scroll placeholder — the contact section arrives in the next build step */}
-      <div id="contact" className="min-h-screen" style={{ backgroundColor: "#fafafa" }} />
+      <Contact />
     </div>
   )
 }
