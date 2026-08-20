@@ -103,7 +103,9 @@ export default function Contact() {
       {/* Bottom: 3-column grid, stacks on mobile */}
       <div
         ref={gridRef}
-        className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6"
+        // Three columns only from lg. At exactly 768 the md: 3-up left each column
+        // ~230px, which broke the email address across lines mid-address.
+        className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-6"
       >
         {/* Column 1: social links */}
         <div className="flex flex-col gap-3">

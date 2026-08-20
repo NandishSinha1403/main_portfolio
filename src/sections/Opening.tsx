@@ -150,8 +150,12 @@ export default function Opening() {
     <section
       id="top"
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ minHeight: "857px" }}
+      // 100svh, not 100vh or a px floor: the old minHeight of 857px was
+      // taller than an iPhone SE (667px) or iPhone 12 (844px) viewport, which
+      // pushed the summary line and scroll cue below the fold with nothing to
+      // indicate they existed. svh also accounts for mobile browser chrome.
+      className="relative flex items-center justify-center overflow-hidden"
+      style={{ minHeight: "100svh" }}
     >
       {/* Layer 1: shader background, scroll-scaled */}
       <div

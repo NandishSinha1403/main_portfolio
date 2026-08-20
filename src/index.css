@@ -37,3 +37,45 @@ body {
 .achievement-link:hover {
   text-decoration-color: rgba(229, 229, 229, 0.9);
 }
+
+/* --- Touch and safe-area adaptation ------------------------------------- */
+
+/* Notched devices: keep fixed chrome and the light footer clear of the
+   rounded corners and home indicator. Paired with viewport-fit=cover. */
+nav {
+  padding-left: max(1.5rem, env(safe-area-inset-left));
+  padding-right: max(1.5rem, env(safe-area-inset-right));
+  padding-top: max(1.5rem, env(safe-area-inset-top));
+}
+#contact {
+  padding-bottom: max(5rem, env(safe-area-inset-bottom));
+}
+
+/* Coarse pointers get real tap targets. 44px is the WCAG 2.5.5 / iOS HIG
+   floor; the inline links in the nav and footer were well under it. */
+@media (pointer: coarse), (max-width: 768px) {
+  nav a,
+  nav button,
+  #contact a,
+  .achievement-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  #skills a,
+  #about a {
+    min-height: 44px;
+  }
+}
+
+/* Hover affordances must never be the only route to information on touch,
+   where :hover either never fires or sticks after a tap. */
+@media (hover: none) {
+  .work-card-btn {
+    opacity: 1;
+  }
+  .work-card-title,
+  .work-card-meta {
+    transform: none;
+  }
+}
