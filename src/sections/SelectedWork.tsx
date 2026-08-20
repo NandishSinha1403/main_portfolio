@@ -10,6 +10,12 @@ interface Project {
   title: string;
   year: string;
   image: string;
+  /** Intrinsic size, so the browser reserves the box before the file loads. */
+  width: number;
+  height: number;
+  /** What the image actually shows. Not the project name again — a screen
+      reader already has the title from the adjacent heading. */
+  alt: string;
   stack: string[];
   note?: string;
 }
@@ -19,6 +25,9 @@ const PROJECTS: Project[] = [
     title: "Samadhan AI — DMC Voice Assistant",
     year: "2026",
     image: "/images/samadhan.jpg",
+    width: 848,
+    height: 418,
+    alt: "The Samadhan AI call console, showing a live Hindi transcript between a caller and the assistant alongside session stats and a generated ticket ID.",
     stack: [
       "Node.js",
       "WebSocket",
@@ -34,18 +43,27 @@ const PROJECTS: Project[] = [
     title: "PRGI Title Similarity & Compliance Validation System",
     year: "2026",
     image: "/images/prgi.jpg",
+    width: 1600,
+    height: 867,
+    alt: "The PRGI validator home screen, headed Press Registrar General of India, with counters for 77,564 registered titles and a title uniqueness check field.",
     stack: ["Python", "FastAPI", "SQL", "jellyfish", "rapidfuzz"],
   },
   {
     title: "MarketScope — Stock Market Trend Visualiser",
     year: "2025",
     image: "/images/marketscope.jpg",
+    width: 1400,
+    height: 840,
+    alt: "A MarketScope line chart of BTC-USD closing prices across October, falling from roughly 125,000 to 108,000 USD.",
     stack: ["Python", "Pandas", "Matplotlib", "NumPy"],
   },
   {
     title: "Grector — Smart Vehicle Safety System",
     year: "2022",
     image: "/images/grector.jpg",
+    width: 1600,
+    height: 1151,
+    alt: "The Grector prototype: a four-wheeled chassis carrying an ultrasonic distance sensor and a microcontroller board wired to the drive electronics.",
     stack: ["Arduino", "ultrasonic sensors"],
     note: "National finalist, Smart India Hackathon 2022",
   },
@@ -59,9 +77,12 @@ function ProjectCard({ project }: { project: Project }) {
     >
       <img
         src={project.image}
-        alt={`Screenshot of ${project.title}`}
+        alt={project.alt}
         className="work-card-img absolute inset-0 h-full w-full object-cover"
+        width={project.width}
+        height={project.height}
         loading="lazy"
+        decoding="async"
       />
 
       {/* Overlay gradient for text legibility over the image */}

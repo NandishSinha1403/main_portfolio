@@ -16,7 +16,9 @@ Fully monochromatic, with one red accent. The site has no other chroma anywhere.
 - Foreground: Off-White `#e5e5e5`, Bright White `#F5F5F5`, Muted Gray `#888`, Deep Black `#000000`
 - Highlight: Red `#ef4444`
 
-**On the red**: keep it scarce — `::selection` and the project-card hover affordance, nothing else. A single chroma on neutral greyscale is powerful precisely because it is rare. It must only ever sit on a controlled flat surface, never directly on the shader, where a white blowout would swallow it.
+**On the red**: it is used for `::selection` and `caret-color` ONLY. It previously also tinted a hover arrow on the project cards; that arrow has been removed (see Selected Work below). A single chroma on neutral greyscale is powerful precisely because it is rare. It must only ever sit on a controlled flat surface, never directly on the shader, where a white blowout would swallow it.
+
+**All of these values live as tokens** in the `@theme` block of `src/index.css` — `--color-metal`, `--color-deep`, `--color-card`, `--color-paper`, `--color-ghost`, `--color-bright`, `--color-fg`, `--color-ink`, `--color-muted`, `--color-muted-ink`, `--color-accent`, plus `--color-rule`, `--color-glass` and `--ease-out-expo`. No color literals should appear outside that block. Note that `--color-muted` (#888) and `--color-muted-ink` (#595959) are deliberately separate: #888 is only 3.4:1 on the light surfaces and fails WCAG AA there.
 
 No rounded corners anywhere — sharp, architectural edges only.
 
@@ -45,6 +47,9 @@ The name sits directly on the shader, which is the one place type and blowouts o
 - Scroll-linked transforms via GSAP ScrollTrigger: background scale 1.0→1.27, opening heading scale 1.0→0.89, both tied to scroll position (not on-load).
 - `transform-style: preserve-3d` and `will-change: transform` on scroll-scaled elements for GPU acceleration.
 - Grain overlay at 15% opacity, `mix-blend-overlay`, across the whole site.
+- Smooth scrolling via Lenis, wired to `ScrollTrigger.update` and driven off `gsap.ticker` with `lagSmoothing(0)`. Disabled entirely under `prefers-reduced-motion`.
+- Scroll-linked work uses `scrub`; entrance reveals use `once: true`. Never `toggleActions` with `reverse` — that re-hides content when it leaves the viewport upward and strands it invisible on `#hash` landings.
+- Heavy scrubbed transforms are gated behind `gsap.matchMedia()` so small viewports get simplified versions.
 
 ## Sections (top to bottom)
 
@@ -66,7 +71,11 @@ Links 18px/500, tight tracking. Desktop: horizontal flex, 3rem gap. Mobile: sing
 Background `#FFFFFF`, text `#000000`. `py-24 px-6`. The black→white transition out of the opening section is a deliberate hard architectural flip — do not soften it with a gradient.
 Heading: "SELECTED WORKS" — "SELECTED" 8vw at weight 700, "WORKS" at weight 200.
 Grid: 2-column, 2rem gap (collapses to 1 column under ~768px).
-Cards: aspect 16:10 desktop / 4:5 mobile, `#18181b` image layer, zoom 1.05 on hover. Title bottom-aligned, `translateY(1rem)→0` on hover. Hover reveals a white circular button with Lucide `ArrowUpRight`; this is where the red accent may appear. Metadata translates `4px→0`, action button fades `0→1` over 300ms.
+Cards: aspect 16:10 desktop / 4:5 mobile, `--color-card` image layer, zoom 1.05 on hover. Title bottom-aligned, `translateY(1rem)→0` on hover; metadata translates `4px→0`.
+
+**No arrow affordance.** An earlier revision put a white circular button with Lucide `ArrowUpRight` on card hover. It was removed: an arrow-out icon promises navigation, and the cards link nowhere, so it misrepresented what the card does. Do not reinstate it unless the projects gain real URLs. Under `(hover: none)` the hover offsets resolve to their resting position, since `:hover` on touch either never fires or sticks after a tap.
+
+Images carry intrinsic `width`/`height` so the browser reserves the box before the file loads, and per-project `alt` describing what the image actually shows rather than repeating the title. `portrait-alt.jpg` is 900×1600 as decoded — its file header reports 1600×900 because of an EXIF rotation flag.
 Use the 4 projects from PRD.md in order: Samadhan AI, PRGI, MarketScope, Grector.
 
 ### Manifesto / achievements

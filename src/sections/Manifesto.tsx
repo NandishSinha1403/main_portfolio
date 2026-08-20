@@ -134,8 +134,16 @@ export default function Manifesto() {
         <div ref={portraitRef} className="flex-shrink-0 md:w-2/5" style={{ willChange: "transform" }}>
           <img
             src="/images/portrait-alt.jpg"
-            alt="Portrait of Nandish Sinha"
+            alt="Nandish Sinha seated outdoors in front of tall dry grass and a bare tree."
             className="w-full object-cover"
+            // 900x1600, not the 1600x900 the file header reports — the JPEG
+            // carries an EXIF rotation flag, so the browser's decoded size is
+            // the transposed one. Declaring the header value would reserve a
+            // landscape box for a portrait image.
+            width={900}
+            height={1600}
+            loading="lazy"
+            decoding="async"
             style={{ filter: "grayscale(1)" }}
           />
         </div>
