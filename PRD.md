@@ -77,5 +77,5 @@ LinkedIn: linkedin.com/in/nandishsinha
 - Fully responsive: phone, tablet, desktop — no section may break, overlap, or require horizontal scroll at any breakpoint.
 - Static site, deployable to nandish.dev.
 - One signature scroll effect done well, not a dozen competing ones (per design doc).
-- Silk WebGL shader as a persistent whole-page background across all sections.
-- Fonts: Fraunces (headings) + Hanken Grotesk (body) — free Google Fonts only, no paid fonts, no Inter.
+- Liquid Metal WebGL shader behind the opening section only — NOT a persistent whole-page background. See DESIGN.md for why.
+- Fonts: Clash Display (headings) + Satoshi (body), self-hosted from Fontshare. Free for commercial use, no paid fonts, no Inter.
