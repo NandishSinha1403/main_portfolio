@@ -1,6 +1,7 @@
-// Fullscreen fragment shader: two-level domain-warped fbm, folded through sine
-// into continuous ribbons. Palette: ground #0F0D2B, accents #9890FA / #EDECFF.
-export const silkFragmentShader = /* glsl */ `
+// Fullscreen fragment shader: two-level domain-warped fbm taken through a
+// steep smoothstep, plus a narrow eighth-power specular band and a cubed dark
+// term. Pure greyscale — ground #0F0F0F, accents #F5F5F5 / #0A0A0A.
+export const liquidMetalFragmentShader = /* glsl */ `
 precision highp float;
 
 uniform vec2 u_resolution;
@@ -64,26 +65,23 @@ void main() {
 
   float field = domainWarp(p, t);
 
-  // smooth the field slightly before folding to avoid marbling / noise mush
-  float smoothed = mix(field, fbm(p * 0.5 + t * 0.02), 0.35);
+  // steep value ramp: pushes the warped field toward hard black/white regions
+  float ramp = smoothstep(0.42 - u_intensity * 0.04, 0.58 + u_intensity * 0.04, field);
 
-  // ribbon fold: pushing the warped field through sine turns turbulence
-  // into long continuous bands.
-  float ribbons = sin((smoothed * 6.2831) + t * 1.5);
-  ribbons = 0.5 + 0.5 * ribbons;
-  ribbons = pow(ribbons, 1.6 + u_intensity * 0.8);
+  // narrow specular: eighth power isolates only the brightest crest of the field
+  float specular = pow(clamp(field, 0.0, 1.0), 8.0);
+  specular *= (0.8 + u_intensity * 0.6);
 
-  // secondary thin ribbon lines for detail
-  float lines = sin(smoothed * 18.0 + t * 2.0);
-  lines = smoothstep(0.85, 1.0, abs(lines));
+  // dark term: cubed inverse field deepens the low end into true black
+  float dark = pow(1.0 - clamp(field, 0.0, 1.0), 3.0);
 
-  vec3 ground = vec3(0.0588, 0.0510, 0.1686); // #0F0D2B
-  vec3 accentA = vec3(0.5961, 0.5647, 0.9804); // #9890FA
-  vec3 accentB = vec3(0.9294, 0.9255, 1.0000); // #EDECFF
+  vec3 ground = vec3(0.0588); // #0F0F0F
+  vec3 bright = vec3(0.9608); // #F5F5F5
+  vec3 deepDark = vec3(0.0392); // #0A0A0A
 
-  vec3 color = ground;
-  color = mix(color, accentA, ribbons * (0.55 + u_intensity * 0.35));
-  color = mix(color, accentB, lines * (0.4 + u_intensity * 0.3));
+  vec3 color = mix(deepDark, bright, ramp);
+  color = mix(color, deepDark, dark * 0.6);
+  color = mix(color, bright, specular);
 
   // subtle vignette to keep edges grounded
   float vig = smoothstep(1.1, 0.2, length(uv - 0.5));
@@ -93,7 +91,7 @@ void main() {
 }
 `;
 
-export const silkVertexShader = /* glsl */ `
+export const liquidMetalVertexShader = /* glsl */ `
 attribute vec2 a_position;
 varying vec2 v_uv;
 

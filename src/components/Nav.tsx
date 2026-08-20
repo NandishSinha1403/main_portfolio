@@ -43,7 +43,7 @@ export default function Nav() {
       <nav
         className="fixed top-0 w-full z-50 px-6 py-6 backdrop-blur-xl border-b"
         style={{
-          backgroundColor: "rgba(15, 13, 43, 0.55)",
+          backgroundColor: "rgba(10, 10, 10, 0.55)",
           borderBottomColor: "rgba(229, 229, 229, 0.12)",
         }}
         aria-label="Primary"
@@ -88,7 +88,7 @@ export default function Nav() {
           aria-modal="true"
           aria-label="Site menu"
           className="fixed inset-0 z-[60] flex flex-col px-6 py-8"
-          style={{ backgroundColor: "#0F0D2B" }}
+          style={{ backgroundColor: "#0F0F0F" }}
         >
           <div className="flex items-center justify-between">
             <span className="text-[18px] font-medium tracking-tight text-[#e5e5e5]">
