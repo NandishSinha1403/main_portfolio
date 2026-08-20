@@ -20,6 +20,7 @@ Persistent, full-page, fixed WebGL canvas behind every section (not swapped out 
 - `<canvas>` fixed, inset 0, behind all content (z-index below page content, above page background color).
 - Fallback: hidden panel shown only if WebGL context creation fails.
 - Respect `prefers-reduced-motion`: render a single static frame, no animation loop.
+- **Suppression**: the raw shader overwhelms foreground content, so it is pushed back with pure CSS over an untouched canvas — a blur plus a ground-colored scrim, both tunable via `BLUR_PX` and `SCRIM_OPACITY` constants at the top of `SilkBackground.tsx`. Current values: 2.5px blur, 0.4 scrim.
 
 ## Motion
 - Entrance easing: `cubic-bezier(0.16, 1, 0.3, 1)`.
@@ -30,7 +31,11 @@ Persistent, full-page, fixed WebGL canvas behind every section (not swapped out 
 ## Sections (top to bottom)
 
 ### Nav
-Fixed, `top-0 w-full z-50`, `mix-blend-difference` (stays legible over Silk and light/dark sections alike). `px-6 py-8`. Links 18px/500, tight tracking. Desktop: horizontal flex, 3rem gap. Mobile: single Lucide `Menu` icon → full-screen overlay menu.
+Fixed, `top-0 w-full z-50`, `px-6 py-6`. **Glassmorphism**: `backdrop-blur-xl` over a dark tint (`rgba(15,13,43,0.55)`) with a hairline bottom border (`rgba(229,229,229,0.12)`). Links stay `#e5e5e5` throughout.
+
+This replaces the original `mix-blend-difference` approach. The blend mode inverted the links against the indigo shader and rendered them a pale yellow-green; the dark-tinted glass solves the same problem — legibility over both the dark Silk and the light Selected Works section — while keeping the links a true off-white.
+
+Links 18px/500, tight tracking. Desktop: horizontal flex, 3rem gap. Mobile: single Lucide `Menu` icon → full-screen overlay menu.
 
 ### Opening / intro section (do not call it "Hero" in UI or copy — internal dev label only)
 `min-h-[100vh]` (min 857px). Silk visible behind it.
@@ -59,7 +64,7 @@ Background `#fafafa`. `py-20 px-6`. Top: full-width `border-b`, "START A PROJECT
 ## Special notes
 - MUST: full weight range (100–900) on Fraunces, used deliberately (thin italic next to black, never mid-weights for display type).
 - MUST: grain overlay site-wide.
-- MUST: `mix-blend-difference` nav across all section backgrounds.
+- MUST: nav stays legible across all section backgrounds — handled by the dark-tinted glass bar, not `mix-blend-difference`.
 - DO NOT: rounded corners anywhere.
 - DO NOT: any color outside the palette above, except the single red accent.
 - DO NOT: call the intro section "Hero" in any user-facing copy.
