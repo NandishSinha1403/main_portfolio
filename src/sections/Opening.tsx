@@ -38,7 +38,7 @@ export default function Opening() {
             y: "0%",
             opacity: 1,
             duration: 1.1,
-            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            ease: "var(--ease-out-expo)",
             stagger: 0.028,
             delay: 0.15,
           }
@@ -53,7 +53,7 @@ export default function Opening() {
             y: 0,
             opacity: 1,
             duration: 1,
-            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            ease: "var(--ease-out-expo)",
             delay: 0.9,
           }
         );
@@ -184,7 +184,7 @@ export default function Opening() {
             className="font-display leading-[0.9]"
             style={{
               fontSize: "clamp(2.25rem, 9vw, 8.5rem)",
-              color: "#F5F5F5",
+              color: "var(--color-bright)",
               fontWeight: 700,
               // -0.05em (from the reference) collides glyphs in long mixed-case
               // strings; that value suits short all-caps settings.
@@ -239,7 +239,7 @@ export default function Opening() {
               fontWeight: 200,
               fontSize: "clamp(1rem, 2.2vw, 2rem)",
               letterSpacing: "-0.02em",
-              color: "#F5F5F5",
+              color: "var(--color-bright)",
             }}
           >
             B.Tech CSE · ITER Bhubaneswar · 2024–2028
@@ -248,7 +248,7 @@ export default function Opening() {
 
         <p
           className="font-body mt-8 max-w-2xl text-base md:text-lg font-medium"
-          style={{ color: "#e5e5e5", opacity: 0.7 }}
+          style={{ color: "var(--color-fg)", opacity: 0.7 }}
         >
           AI/ML and forward deployed engineer. Real-time voice systems, applied
           ML, and the infrastructure that keeps them running.

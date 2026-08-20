@@ -34,7 +34,7 @@ export default function Contact() {
             scale: 1,
             opacity: 1,
             duration: 1.1,
-            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            ease: "var(--ease-out-expo)",
             scrollTrigger: {
               trigger: headingRef.current,
               start: "top 90%",
@@ -53,7 +53,7 @@ export default function Contact() {
             opacity: 1,
             duration: 0.8,
             stagger: 0.1,
-            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            ease: "var(--ease-out-expo)",
             scrollTrigger: {
               trigger: gridRef.current,
               start: "top 90%",
@@ -80,10 +80,10 @@ export default function Contact() {
       id="contact"
       ref={sectionRef}
       className="py-20 px-6"
-      style={{ backgroundColor: "#fafafa", color: "#000000" }}
+      style={{ backgroundColor: "var(--color-ghost)", color: "var(--color-ink)" }}
     >
       {/* Top: full-width display text */}
-      <div className="border-b" style={{ borderColor: "#000000" }}>
+      <div className="border-b" style={{ borderColor: "var(--color-ink)" }}>
         <h2
           ref={headingRef}
           className="font-heading uppercase leading-none pb-4"
@@ -93,7 +93,7 @@ export default function Contact() {
             fontWeight: 700,
             letterSpacing: "-0.005em",
             wordSpacing: "0.08em",
-            color: "#000000",
+            color: "var(--color-ink)",
           }}
         >
           Get in touch
@@ -111,7 +111,7 @@ export default function Contact() {
         <div className="flex flex-col gap-3">
           <span
             className="font-mono uppercase"
-            style={{ fontSize: "14px", color: "#595959" }}
+            style={{ fontSize: "14px", color: "var(--color-muted-ink)" }}
           >
             Elsewhere
           </span>
@@ -123,7 +123,7 @@ export default function Contact() {
               rel="noopener noreferrer"
               className="font-body font-medium w-fit"
               style={{
-                color: "#000000",
+                color: "var(--color-ink)",
                 textUnderlineOffset: "4px",
               }}
               onMouseEnter={(e) => {
@@ -143,7 +143,7 @@ export default function Contact() {
         <div className="flex flex-col justify-start">
           <span
             className="font-mono uppercase mb-3"
-            style={{ fontSize: "14px", color: "#595959" }}
+            style={{ fontSize: "14px", color: "var(--color-muted-ink)" }}
           >
             Email
           </span>
@@ -152,7 +152,7 @@ export default function Contact() {
             className="font-body font-medium break-words"
             style={{
               fontSize: "clamp(1.25rem, 3vw, 1.875rem)",
-              color: "#000000",
+              color: "var(--color-ink)",
             }}
           >
             sinha.nandish@gmail.com
@@ -163,7 +163,7 @@ export default function Contact() {
         <div className="flex items-end justify-start md:justify-end">
           <p
             className="font-body font-medium"
-            style={{ color: "#595959", fontSize: "0.875rem" }}
+            style={{ color: "var(--color-muted-ink)", fontSize: "0.875rem" }}
           >
             © 2026 Nandish Sinha. All rights reserved.
           </p>

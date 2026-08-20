@@ -111,7 +111,7 @@ export default function Skills() {
             opacity: 1,
             y: 0,
             duration: 0.8,
-            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            ease: "var(--ease-out-expo)",
             scrollTrigger: {
               trigger: el,
               start: "top 85%",
@@ -135,7 +135,7 @@ export default function Skills() {
             y: 0,
             duration: 0.8,
             stagger: 0.15,
-            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            ease: "var(--ease-out-expo)",
             scrollTrigger: {
               trigger: sectionRef.current!.querySelector(
                 "[data-experience-list]"
@@ -159,7 +159,7 @@ export default function Skills() {
             y: 0,
             duration: 0.7,
             stagger: 0.1,
-            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            ease: "var(--ease-out-expo)",
             scrollTrigger: {
               trigger: sectionRef.current!.querySelector(
                 "[data-skill-grid]"
@@ -190,7 +190,7 @@ export default function Skills() {
       id="skills"
       ref={sectionRef}
       className="px-6 py-24 md:py-32"
-      style={{ backgroundColor: "#0F0F0F" }}
+      style={{ backgroundColor: "var(--color-metal)" }}
     >
       <div className="mx-auto max-w-5xl">
         {/* Experience */}
@@ -199,7 +199,7 @@ export default function Skills() {
             data-animate-heading
             className="font-heading"
             style={{
-              color: "#F5F5F5",
+              color: "var(--color-bright)",
               fontWeight: 700,
               fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
               letterSpacing: "-0.005em",
@@ -223,7 +223,7 @@ export default function Skills() {
                   <p
                     className="font-mono uppercase"
                     style={{
-                      color: "#888",
+                      color: "var(--color-muted)",
                       fontSize: "14px",
                       letterSpacing: "0.05em",
                     }}
@@ -232,13 +232,13 @@ export default function Skills() {
                   </p>
                   <p
                     className="font-body mt-2 font-medium"
-                    style={{ color: "#e5e5e5" }}
+                    style={{ color: "var(--color-fg)" }}
                   >
                     {entry.role}
                   </p>
                   <p
                     className="font-body font-medium"
-                    style={{ color: "#e5e5e5", opacity: 0.7 }}
+                    style={{ color: "var(--color-fg)", opacity: 0.7 }}
                   >
                     {entry.org}
                   </p>
@@ -248,7 +248,7 @@ export default function Skills() {
                   <p
                     className="font-mono uppercase"
                     style={{
-                      color: "#888",
+                      color: "var(--color-muted)",
                       fontSize: "14px",
                       letterSpacing: "0.05em",
                     }}
@@ -259,7 +259,7 @@ export default function Skills() {
                   {entry.stats && (
                     <p
                       className="font-body mt-3 font-medium"
-                      style={{ color: "#e5e5e5" }}
+                      style={{ color: "var(--color-fg)" }}
                     >
                       {entry.stats}
                     </p>
@@ -270,9 +270,9 @@ export default function Skills() {
                       <li
                         key={bullet}
                         className="font-body font-medium"
-                        style={{ color: "#e5e5e5", opacity: 0.85 }}
+                        style={{ color: "var(--color-fg)", opacity: 0.85 }}
                       >
-                        <span style={{ color: "#888" }}>— </span>
+                        <span style={{ color: "var(--color-muted)" }}>— </span>
                         {bullet}
                       </li>
                     ))}
@@ -290,7 +290,7 @@ export default function Skills() {
           style={{
             height: "1px",
             width: "100%",
-            backgroundColor: "rgba(229,229,229,0.12)",
+            backgroundColor: "var(--color-rule)",
           }}
         />
 
@@ -300,7 +300,7 @@ export default function Skills() {
             data-animate-heading
             className="font-heading"
             style={{
-              color: "#F5F5F5",
+              color: "var(--color-bright)",
               fontWeight: 700,
               fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
               letterSpacing: "-0.005em",
@@ -319,7 +319,7 @@ export default function Skills() {
                 <p
                   className="font-mono uppercase"
                   style={{
-                    color: "#888",
+                    color: "var(--color-muted)",
                     fontSize: "14px",
                     letterSpacing: "0.05em",
                   }}
@@ -328,7 +328,7 @@ export default function Skills() {
                 </p>
                 <p
                   className="font-body mt-3 font-medium leading-relaxed"
-                  style={{ color: "#e5e5e5" }}
+                  style={{ color: "var(--color-fg)" }}
                 >
                   {group.items.join(" · ")}
                 </p>

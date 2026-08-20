@@ -41,7 +41,7 @@ export default function Manifesto() {
             y: 0,
             opacity: 1,
             duration: 1,
-            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            ease: "var(--ease-out-expo)",
             scrollTrigger: {
               trigger: statementRef.current,
               start: "top 85%",
@@ -58,7 +58,7 @@ export default function Manifesto() {
           {
             width: "100%",
             duration: 1,
-            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            ease: "var(--ease-out-expo)",
             scrollTrigger: {
               trigger: ruleRef.current,
               start: "top 90%",
@@ -77,7 +77,7 @@ export default function Manifesto() {
             opacity: 1,
             duration: 0.7,
             stagger: 0.06,
-            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            ease: "var(--ease-out-expo)",
             scrollTrigger: {
               trigger: achievementsRef.current,
               start: "top 88%",
@@ -127,7 +127,7 @@ export default function Manifesto() {
       id="about"
       ref={sectionRef}
       className="relative min-h-screen"
-      style={{ backgroundColor: "#0A0A0A" }}
+      style={{ backgroundColor: "var(--color-deep)" }}
     >
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col gap-12 px-6 py-24 md:flex-row md:items-center md:gap-16 md:py-0">
         {/* Portrait */}
@@ -148,7 +148,7 @@ export default function Manifesto() {
             style={{
               fontSize: "clamp(2rem, 6vw, 4.5rem)",
               fontWeight: 500,
-              color: "#F5F5F5",
+              color: "var(--color-bright)",
               letterSpacing: "-0.005em",
               wordSpacing: "0.08em",
             }}
@@ -172,7 +172,7 @@ export default function Manifesto() {
               <li
                 key={item.label}
                 className="text-sm leading-relaxed"
-                style={{ color: "#888", fontSize: "14px" }}
+                style={{ color: "var(--color-muted)", fontSize: "14px" }}
               >
                 {item.href ? (
                   <a

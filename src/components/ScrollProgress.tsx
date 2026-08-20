@@ -47,7 +47,7 @@ export default function ScrollProgress() {
         ref={barRef}
         className="h-full w-full"
         style={{
-          backgroundColor: "#e5e5e5",
+          backgroundColor: "var(--color-fg)",
           transform: "scaleX(0)",
           transformOrigin: "0% 50%",
           willChange: "transform",

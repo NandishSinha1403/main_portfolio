@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { ArrowUpRight } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -56,7 +55,7 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <div
       className="work-card group relative w-full overflow-hidden"
-      style={{ backgroundColor: "#18181b" }}
+      style={{ backgroundColor: "var(--color-card)" }}
     >
       <img
         src={project.image}
@@ -79,19 +78,12 @@ function ProjectCard({ project }: { project: Project }) {
         }}
       />
 
-      {/* Circular hover button */}
-      <div
-        className="work-card-btn pointer-events-none absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white opacity-0"
-        aria-hidden="true"
-      >
-        <ArrowUpRight size={20} color="#0A0A0A" strokeWidth={2.25} />
-      </div>
 
       {/* Bottom content block: title + metadata, always visible, animates on hover */}
       <div className="relative z-10 flex h-full flex-col justify-end p-5">
         <p
           className="work-card-meta font-mono"
-          style={{ fontSize: "14px", color: "#e5e5e5" }}
+          style={{ fontSize: "14px", color: "var(--color-fg)" }}
         >
           {project.year} · {project.stack.join(", ")}
         </p>
@@ -101,7 +93,7 @@ function ProjectCard({ project }: { project: Project }) {
             style={{
               fontSize: "clamp(0.95rem, 1.3vw, 1.15rem)",
               fontWeight: 700,
-              color: "#F5F5F5",
+              color: "var(--color-bright)",
               letterSpacing: "0.01em",
             }}
           >
@@ -113,7 +105,7 @@ function ProjectCard({ project }: { project: Project }) {
           style={{
             fontWeight: 500,
             fontSize: "clamp(1.1rem, 2.4vw, 1.75rem)",
-            color: "#F5F5F5",
+            color: "var(--color-bright)",
             lineHeight: 1.1,
           }}
         >
@@ -145,7 +137,7 @@ export default function SelectedWork() {
             y: 0,
             opacity: 1,
             duration: 1,
-            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            ease: "var(--ease-out-expo)",
             scrollTrigger: {
               trigger: headingRef.current,
               start: "top 85%",
@@ -174,7 +166,7 @@ export default function SelectedWork() {
             opacity: 1,
             duration: 1,
             stagger: 0.15,
-            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            ease: "var(--ease-out-expo)",
             scrollTrigger: {
               trigger: gridRef.current,
               start: "top 80%",
@@ -201,7 +193,7 @@ export default function SelectedWork() {
       id="work"
       ref={sectionRef}
       className="py-24 px-6"
-      style={{ backgroundColor: "#FFFFFF", color: "#000000" }}
+      style={{ backgroundColor: "var(--color-paper)", color: "var(--color-ink)" }}
     >
       <style>{`
         .work-card {
@@ -213,36 +205,29 @@ export default function SelectedWork() {
         .work-card-img {
           filter: grayscale(1) brightness(0.8);
           transform: scale(1);
-          transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
-            filter 500ms cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 500ms var(--ease-out-expo),
+            filter 500ms var(--ease-out-expo);
         }
         .work-card:hover .work-card-img {
           transform: scale(1.05);
           filter: grayscale(0.15) brightness(0.95);
         }
-        .work-card-btn {
-          transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .work-card:hover .work-card-btn {
-          opacity: 1;
-        }
         .work-card-meta {
           transform: translateY(4px);
-          transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 300ms var(--ease-out-expo);
         }
         .work-card:hover .work-card-meta {
           transform: translateY(0);
         }
         .work-card-title {
           transform: translateY(1rem);
-          transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 300ms var(--ease-out-expo);
         }
         .work-card:hover .work-card-title {
           transform: translateY(0);
         }
         @media (prefers-reduced-motion: reduce) {
           .work-card-img,
-          .work-card-btn,
           .work-card-meta,
           .work-card-title {
             transition: none !important;
@@ -251,9 +236,6 @@ export default function SelectedWork() {
         /* Touch devices have no hover state — surface the affordances that
            would otherwise be stuck invisible/offset behind :hover. */
         @media (hover: none) {
-          .work-card-btn {
-            opacity: 0.85;
-          }
           .work-card-meta,
           .work-card-title {
             transform: translateY(0);
