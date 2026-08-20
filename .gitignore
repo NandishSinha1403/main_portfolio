@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Original photo sources (large HEIC/JPG); web versions live in public/images
+/assets
