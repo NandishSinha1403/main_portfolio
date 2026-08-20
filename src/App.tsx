@@ -1,5 +1,6 @@
 import Nav from "./components/Nav"
 import Opening from "./sections/Opening"
+import SelectedWork from "./sections/SelectedWork"
 import Manifesto from "./sections/Manifesto"
 
 function App() {
@@ -7,9 +8,9 @@ function App() {
     <div className="min-h-screen">
       <Nav />
       <Opening />
-      {/* Temporary scroll placeholders — real sections arrive in later build steps */}
-      <div id="work" className="min-h-screen" style={{ backgroundColor: "#FFFFFF" }} />
+      <SelectedWork />
       <Manifesto />
+      {/* Temporary scroll placeholders — real sections arrive in later build steps */}
       <div id="skills" className="min-h-screen" style={{ backgroundColor: "#0F0F0F" }} />
       <div id="contact" className="min-h-screen" style={{ backgroundColor: "#fafafa" }} />
     </div>
