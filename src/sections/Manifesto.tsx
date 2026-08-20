@@ -40,7 +40,7 @@ export default function Manifesto() {
             scrollTrigger: {
               trigger: statementRef.current,
               start: "top 85%",
-              toggleActions: "play none none reverse",
+              once: true,
             },
           }
         );
@@ -57,14 +57,25 @@ export default function Manifesto() {
             scrollTrigger: {
               trigger: ruleRef.current,
               start: "top 90%",
-              toggleActions: "play none none reverse",
+              once: true,
             },
           }
         );
       }
     }, sectionRef);
 
-    return () => ctx.revert();
+    // Trigger positions are measured before the portrait and webfonts finish
+    // loading, which shifts layout underneath them. Without a refresh the
+    // start points sit at stale offsets and reveals can fail to fire.
+    const refresh = () => ScrollTrigger.refresh();
+    const raf = requestAnimationFrame(refresh);
+    window.addEventListener("load", refresh);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("load", refresh);
+      ctx.revert();
+    };
   }, []);
 
   return (
