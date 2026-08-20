@@ -108,12 +108,15 @@ export default function Opening() {
             Nandish Sinha
           </h1>
 
-          {/* Role sub-label: desktop overlay to the right of the heading,
-              mobile falls back to stacking beneath it (absolute positioning
-              would overflow the viewport at narrow widths). */}
+          {/* Role sub-label. DESIGN.md specifies this hanging off the heading's
+              right edge at left-[calc(100%+1rem)], but that only works if the
+              heading leaves room beside it. At the specified 11vw the name
+              spans nearly the full viewport, so the label was starting past
+              the right edge and being clipped (~480px lost at 1470px wide).
+              Stacked beneath the heading instead, which holds at every width. */}
           <p
             ref={roleRef}
-            className="font-heading italic mt-4 md:mt-0 md:absolute md:left-[calc(100%+1rem)] md:top-1/2 md:-translate-y-1/2 md:whitespace-nowrap"
+            className="font-heading italic mt-4"
             style={{
               fontWeight: 100,
               fontSize: "clamp(1rem, 2.2vw, 2rem)",
