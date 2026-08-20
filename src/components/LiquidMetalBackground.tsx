@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { silkFragmentShader, silkVertexShader } from "../shaders/silk.frag";
+import {
+  liquidMetalFragmentShader,
+  liquidMetalVertexShader,
+} from "../shaders/liquidMetal.frag";
 import { createFullscreenQuad, createGLContext, createProgram } from "../lib/webgl";
 
 const MAX_DPR = 2;
 
-// How far the background is pushed back so foreground content can sit on it.
-// Both are pure CSS over an untouched shader, so they're safe to dial.
-// BLUR softens the fine texture; SCRIM_OPACITY flattens the contrast.
-const BLUR_PX = 2.5;
-const SCRIM_OPACITY = 0.4;
-
-export default function SilkBackground() {
+// Scoped to the opening section only — absolute within its (relative)
+// parent, not fixed to the viewport. Runs at full strength: no blur, no
+// scrim. See DESIGN.md "Background: Liquid Metal (opening section only)".
+export default function LiquidMetalBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [webglFailed, setWebglFailed] = useState(false);
 
@@ -26,9 +26,9 @@ export default function SilkBackground() {
 
     let program: WebGLProgram;
     try {
-      program = createProgram(gl, silkVertexShader, silkFragmentShader);
+      program = createProgram(gl, liquidMetalVertexShader, liquidMetalFragmentShader);
     } catch (err) {
-      console.error("Silk shader compile/link failed:", err);
+      console.error("Liquid Metal shader compile/link failed:", err);
       setWebglFailed(true);
       return;
     }
@@ -56,8 +56,9 @@ export default function SilkBackground() {
     function resize() {
       if (!canvas || !gl) return;
       const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
-      const width = Math.floor(window.innerWidth * dpr);
-      const height = Math.floor(window.innerHeight * dpr);
+      const rect = canvas.getBoundingClientRect();
+      const width = Math.floor(rect.width * dpr);
+      const height = Math.floor(rect.height * dpr);
       if (canvas.width !== width || canvas.height !== height) {
         canvas.width = width;
         canvas.height = height;
@@ -126,29 +127,17 @@ export default function SilkBackground() {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-0">
+    <div className="absolute inset-0 z-0">
       {webglFailed && (
         <div
           className="absolute inset-0"
-          style={{ backgroundColor: "#0F0D2B" }}
+          style={{ backgroundColor: "#0F0F0F" }}
           aria-hidden="true"
         />
       )}
       <canvas
         ref={canvasRef}
         className="pointer-events-none absolute inset-0 h-full w-full"
-        style={{
-          filter: `blur(${BLUR_PX}px)`,
-          // Blur samples past the canvas edge and would show a soft border, so
-          // overscan slightly to keep the bleed off-screen.
-          transform: "scale(1.04)",
-        }}
-        aria-hidden="true"
-      />
-      {/* Scrim: knocks the shader back so foreground type stays dominant. */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{ backgroundColor: "#0F0D2B", opacity: SCRIM_OPACITY }}
         aria-hidden="true"
       />
     </div>
