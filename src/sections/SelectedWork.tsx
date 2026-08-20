@@ -1,4 +1,9 @@
+import { useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Selected Work section. See DESIGN.md "Selected Work (project grid)" and
 // PRD.md "Selected Work (Projects — grid section)" for spec/content.
@@ -120,9 +125,81 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export default function SelectedWork() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReducedMotion || !sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      if (headingRef.current) {
+        gsap.fromTo(
+          headingRef.current,
+          { y: 40, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            scrollTrigger: {
+              trigger: headingRef.current,
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      if (gridRef.current) {
+        const cards = gridRef.current.querySelectorAll<HTMLElement>(
+          ".work-card"
+        );
+        gsap.fromTo(
+          cards,
+          {
+            y: 64,
+            scale: 0.94,
+            clipPath: "inset(6% 6% 6% 6% round 0px)",
+            opacity: 0,
+          },
+          {
+            y: 0,
+            scale: 1,
+            clipPath: "inset(0% 0% 0% 0% round 0px)",
+            opacity: 1,
+            duration: 1,
+            stagger: 0.15,
+            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            scrollTrigger: {
+              trigger: gridRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    const refresh = () => ScrollTrigger.refresh();
+    const raf = requestAnimationFrame(refresh);
+    window.addEventListener("load", refresh);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("load", refresh);
+      ctx.revert();
+    };
+  }, []);
+
   return (
     <section
       id="work"
+      ref={sectionRef}
       className="py-24 px-6"
       style={{ backgroundColor: "#FFFFFF", color: "#000000" }}
     >
@@ -171,9 +248,21 @@ export default function SelectedWork() {
             transition: none !important;
           }
         }
+        /* Touch devices have no hover state — surface the affordances that
+           would otherwise be stuck invisible/offset behind :hover. */
+        @media (hover: none) {
+          .work-card-btn {
+            opacity: 0.85;
+          }
+          .work-card-meta,
+          .work-card-title {
+            transform: translateY(0);
+          }
+        }
       `}</style>
 
       <h2
+        ref={headingRef}
         className="font-display mb-16 leading-[0.9]"
         style={{ letterSpacing: "-0.005em", wordSpacing: "0.08em" }}
       >
@@ -191,7 +280,11 @@ export default function SelectedWork() {
         </span>
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: "2rem" }}>
+      <div
+        ref={gridRef}
+        className="grid grid-cols-1 md:grid-cols-2"
+        style={{ gap: "2rem" }}
+      >
         {PROJECTS.map((project) => (
           <ProjectCard key={project.title} project={project} />
         ))}

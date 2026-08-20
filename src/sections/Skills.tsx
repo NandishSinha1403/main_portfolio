@@ -100,11 +100,10 @@ export default function Skills() {
     if (prefersReducedMotion || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      const targets = sectionRef.current!.querySelectorAll<HTMLElement>(
-        "[data-animate]"
+      const headings = sectionRef.current!.querySelectorAll<HTMLElement>(
+        "[data-animate-heading]"
       );
-
-      targets.forEach((el) => {
+      headings.forEach((el) => {
         gsap.fromTo(
           el,
           { opacity: 0, y: 24 },
@@ -121,6 +120,56 @@ export default function Skills() {
           }
         );
       });
+
+      // Experience entries and skill groups each stagger in as their own
+      // group crosses into view, rather than the whole block popping at once.
+      const experienceRows = sectionRef.current!.querySelectorAll<HTMLElement>(
+        "[data-experience-row]"
+      );
+      if (experienceRows.length) {
+        gsap.fromTo(
+          experienceRows,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            scrollTrigger: {
+              trigger: sectionRef.current!.querySelector(
+                "[data-experience-list]"
+              ),
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      const skillGroupEls = sectionRef.current!.querySelectorAll<HTMLElement>(
+        "[data-skill-group]"
+      );
+      if (skillGroupEls.length) {
+        gsap.fromTo(
+          skillGroupEls,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.1,
+            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            scrollTrigger: {
+              trigger: sectionRef.current!.querySelector(
+                "[data-skill-grid]"
+              ),
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }
     }, sectionRef);
 
     // Recalculate start points once webfonts land — they change line wrapping
@@ -145,8 +194,9 @@ export default function Skills() {
     >
       <div className="mx-auto max-w-5xl">
         {/* Experience */}
-        <div data-animate>
+        <div>
           <h2
+            data-animate-heading
             className="font-heading"
             style={{
               color: "#F5F5F5",
@@ -159,10 +209,14 @@ export default function Skills() {
             Experience
           </h2>
 
-          <div className="mt-10 flex flex-col gap-12 md:mt-14 md:gap-14">
+          <div
+            data-experience-list
+            className="mt-10 flex flex-col gap-12 md:mt-14 md:gap-14"
+          >
             {experience.map((entry) => (
               <div
                 key={entry.role}
+                data-experience-row
                 className="grid grid-cols-1 gap-3 md:grid-cols-[minmax(0,220px)_1fr] md:gap-10"
               >
                 <div>
@@ -241,8 +295,9 @@ export default function Skills() {
         />
 
         {/* Skills */}
-        <div data-animate>
+        <div>
           <h2
+            data-animate-heading
             className="font-heading"
             style={{
               color: "#F5F5F5",
@@ -255,9 +310,12 @@ export default function Skills() {
             Skills
           </h2>
 
-          <div className="mt-10 grid grid-cols-1 gap-x-10 gap-y-10 md:mt-14 md:grid-cols-2">
+          <div
+            data-skill-grid
+            className="mt-10 grid grid-cols-1 gap-x-10 gap-y-10 md:mt-14 md:grid-cols-2"
+          >
             {skillGroups.map((group) => (
-              <div key={group.label}>
+              <div key={group.label} data-skill-group>
                 <p
                   className="font-mono uppercase"
                   style={{

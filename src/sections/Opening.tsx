@@ -5,6 +5,8 @@ import LiquidMetalBackground from "../components/LiquidMetalBackground";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const NAME = "Nandish Sinha";
+
 // Opening section (internal dev label only — never call this "Hero" in
 // user-facing copy). See DESIGN.md "Opening section" + "Background: Liquid
 // Metal" + "Motion".
@@ -13,6 +15,7 @@ export default function Opening() {
   const bgRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const roleRef = useRef<HTMLParagraphElement>(null);
+  const cueRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -22,31 +25,99 @@ export default function Opening() {
     if (prefersReducedMotion || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      if (bgRef.current) {
-        gsap.to(bgRef.current, {
-          scale: 1.27,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
+      const chars = headingRef.current
+        ? headingRef.current.querySelectorAll<HTMLElement>("[data-char]")
+        : null;
+
+      // Entrance: characters stagger in on load, independent of scroll.
+      if (chars && chars.length) {
+        gsap.fromTo(
+          chars,
+          { y: "110%", opacity: 0 },
+          {
+            y: "0%",
+            opacity: 1,
+            duration: 1.1,
+            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            stagger: 0.028,
+            delay: 0.15,
+          }
+        );
       }
 
-      if (headingRef.current) {
-        gsap.to(headingRef.current, {
-          scale: 0.89,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
+      if (roleRef.current) {
+        gsap.fromTo(
+          roleRef.current,
+          { y: 16, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            delay: 0.9,
+          }
+        );
       }
+
+      // matchMedia keeps the pinned/scrubbed heavy-lift transforms (shader
+      // scale, heading scale, character drift) on larger screens where they
+      // read cleanly, and swaps to a lighter fade for the scroll cue + role
+      // label everywhere so nothing feels janky on small viewports.
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        {
+          isDesktop: "(min-width: 769px)",
+          isMobile: "(max-width: 768px)",
+        },
+        (context) => {
+          const { isDesktop } = context.conditions as { isDesktop: boolean };
+
+          if (bgRef.current) {
+            gsap.to(bgRef.current, {
+              scale: isDesktop ? 1.27 : 1.12,
+              ease: "none",
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+              },
+            });
+          }
+
+          if (headingRef.current) {
+            gsap.to(headingRef.current, {
+              scale: isDesktop ? 0.89 : 0.95,
+              ease: "none",
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+              },
+            });
+          }
+
+          // Per-character drift apart on scroll — only worth the cost on
+          // wider screens where the name has room to breathe.
+          if (isDesktop && chars && chars.length) {
+            const mid = (chars.length - 1) / 2;
+            chars.forEach((el, i) => {
+              gsap.to(el, {
+                x: (i - mid) * 3,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: sectionRef.current,
+                  start: "top top",
+                  end: "bottom top",
+                  scrub: true,
+                },
+              });
+            });
+          }
+        }
+      );
 
       if (roleRef.current) {
         gsap.to(roleRef.current, {
@@ -56,6 +127,24 @@ export default function Opening() {
             trigger: sectionRef.current,
             start: "top top",
             end: "60% top",
+            scrub: true,
+          },
+        });
+      }
+
+      if (cueRef.current) {
+        gsap.fromTo(
+          cueRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 1, delay: 1.4, ease: "power1.out" }
+        );
+        gsap.to(cueRef.current, {
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "18% top",
             scrub: true,
           },
         });
@@ -109,7 +198,24 @@ export default function Opening() {
               transformStyle: "preserve-3d",
             }}
           >
-            Nandish Sinha
+            {NAME.split("").map((char, i) =>
+              char === " " ? (
+                <span key={i} aria-hidden="true">
+                  {" "}
+                </span>
+              ) : (
+                <span
+                  key={i}
+                  data-char
+                  className="inline-block overflow-hidden"
+                  style={{ willChange: "transform" }}
+                  aria-hidden="true"
+                >
+                  <span className="inline-block">{char}</span>
+                </span>
+              )
+            )}
+            <span className="sr-only">{NAME}</span>
           </h1>
 
           {/* Role sub-label. DESIGN.md specifies this hanging off the heading's
@@ -142,6 +248,30 @@ export default function Opening() {
           AI/ML and forward deployed engineer. Real-time voice systems, applied
           ML, and the infrastructure that keeps them running.
         </p>
+      </div>
+
+      {/* Scroll cue, fades out on first scroll */}
+      <div
+        ref={cueRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2"
+        style={{ opacity: 0 }}
+      >
+        <div
+          className="font-mono"
+          style={{
+            fontSize: "12px",
+            letterSpacing: "0.15em",
+            color: "rgba(229,229,229,0.6)",
+            textTransform: "uppercase",
+          }}
+        >
+          Scroll
+        </div>
+        <div
+          className="mx-auto mt-2 h-8 w-px"
+          style={{ backgroundColor: "rgba(229,229,229,0.35)" }}
+        />
       </div>
     </section>
   );

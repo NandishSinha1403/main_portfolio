@@ -22,6 +22,8 @@ export default function Manifesto() {
   const sectionRef = useRef<HTMLElement>(null);
   const statementRef = useRef<HTMLParagraphElement>(null);
   const ruleRef = useRef<HTMLDivElement>(null);
+  const portraitRef = useRef<HTMLDivElement>(null);
+  const achievementsRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -65,6 +67,45 @@ export default function Manifesto() {
           }
         );
       }
+
+      if (achievementsRef.current) {
+        gsap.fromTo(
+          achievementsRef.current.children,
+          { y: 16, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            stagger: 0.06,
+            ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+            scrollTrigger: {
+              trigger: achievementsRef.current,
+              start: "top 88%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // Classic scrollytelling parallax: the portrait drifts slower than the
+      // text column while the section scrolls past. Desktop-only — on
+      // narrower layouts the two stack vertically and a parallax offset just
+      // introduces gaps/overlap risk against the text below it.
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 769px)", () => {
+        if (portraitRef.current) {
+          gsap.to(portraitRef.current, {
+            y: -60,
+            ease: "none",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+        }
+      });
     }, sectionRef);
 
     // Trigger positions are measured before the portrait and webfonts finish
@@ -90,7 +131,7 @@ export default function Manifesto() {
     >
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col gap-12 px-6 py-24 md:flex-row md:items-center md:gap-16 md:py-0">
         {/* Portrait */}
-        <div className="flex-shrink-0 md:w-2/5">
+        <div ref={portraitRef} className="flex-shrink-0 md:w-2/5" style={{ willChange: "transform" }}>
           <img
             src="/images/portrait-alt.jpg"
             alt="Portrait of Nandish Sinha"
@@ -126,7 +167,7 @@ export default function Manifesto() {
             }}
           />
 
-          <ul className="font-mono mt-10 flex flex-col gap-3">
+          <ul ref={achievementsRef} className="font-mono mt-10 flex flex-col gap-3">
             {ACHIEVEMENTS.map((item) => (
               <li
                 key={item.label}

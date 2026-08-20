@@ -72,7 +72,7 @@ export default function Nav() {
           <button
             ref={toggleRef}
             type="button"
-            className="md:hidden text-[#e5e5e5]"
+            className="md:hidden text-[#e5e5e5] -m-2 p-2"
             aria-label="Open menu"
             aria-expanded={open}
             onClick={() => setOpen(true)}
@@ -97,7 +97,7 @@ export default function Nav() {
             <button
               ref={closeRef}
               type="button"
-              className="text-[#e5e5e5]"
+              className="text-[#e5e5e5] -m-2 p-2"
               aria-label="Close menu"
               onClick={() => setOpen(false)}
             >
